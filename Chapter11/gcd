@@ -1,0 +1,54 @@
+;; file: gcd_function.s
+;; author: SS
+;; date: Sep 9, 2019
+;;
+;; This program reads in two nonnegative integers a and b,
+;; then prints their gcd.  It demonstrates how to write
+;; iterative functions in SLIM.
+;;
+;; The SLIM code translates the following python code:
+;;
+;; def main():
+;;     a = int(input())
+;;     b = int(input())
+;;     print(gcd(a, b))
+;; 
+;; def gcd(a, b):
+;;     while b > 0:
+;;         a, b = b, a%b
+;;     return a
+;; 
+;; main()
+
+    allocate-registers zero a b gcd cont return d r test
+
+    li zero 0
+    li gcd gcdL
+    li cont writeL
+    li return returnL
+    read a
+    read b
+    j gcd
+writeL:
+    write d
+    halt
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; function: gcd
+;; input registers: a, b
+;; output register: d
+;; return address register: cont
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+gcdL:
+    sgt test b zero
+    jeqz test return
+    rem r a b
+    sub a a a
+    add a a b
+    sub b b b
+    add b b r
+    j gcd
+returnL:
+    sub d d d
+    add d d a
+    j cont

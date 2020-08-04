@@ -1,0 +1,58 @@
+import java.util.Scanner
+
+for (i in 0 until c){
+    for (j in 0 until r){
+        table[i][j] = " "
+    }
+}
+
+class Board(){
+
+    init{
+
+    }
+
+}
+
+fun nextCell(): (x, y){
+    loop throught the table and find the next empty cell
+    if you cannot find it, then the algorithm finishes (-1 , -1)
+}
+
+fun isValid(param: the coordinate of the cell): Boolean{
+    check the number of white and blue cells in the row and col that contains the given cell
+    to see if it satisfies the requirement
+
+    --BBW-- (probably can work)
+    BBBB-- (not working)
+    number of blues <= 3
+
+    no three in a row
+}
+
+val table[][]
+
+fun solve(param: (x, y)): Boolean{
+    if (param == (-1,-1)) return true
+
+    table[x][y] = "W"
+    if (isValid(x, y)){
+         val nextSquare = nextCell()
+         if (solve(nextQuare)) return true
+         else{
+            table[x][y] = "-"
+         }
+    }
+
+    table[x][y] = "B"
+    if (isValid(x, y)){
+         val nextSquare = nextCell()
+         if (solve(nextQuare)) return true
+         else{
+            table[x][y] = "-"
+         }
+    }
+
+    return false
+}
+val square : Pair<Int, Int> = (x to y)

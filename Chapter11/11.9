@@ -1,0 +1,51 @@
+; 11.9 exercise
+
+allocate-registers x y n m one zero a e num
+allocate-registers loop if end result comparison
+
+read x
+read y
+read n
+read m
+
+li one 1
+li zero 0
+
+li loop loopL
+li end afterFirstL
+li if ifL
+
+add a zero x
+add e zero n
+add num zero x
+
+ifL: 
+	seq comparison e zero 
+	jeqz comparison loop
+	li result 0
+
+loopL:
+	sgt comparison e one
+	jeqz comparison end
+	mul a a num
+	sub e e one
+	j loop
+
+afterFirstL:
+	write a
+	add result result a
+	sub a a a
+	sub e e e
+	sub num num num
+	add a zero y
+	add e zero m
+	add num zero y
+	li end afterSecondL
+	j if
+
+afterSecondL:
+	write a
+	add result result a
+	write result
+	halt
+

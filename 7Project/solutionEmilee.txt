@@ -1,0 +1,123 @@
+import java.util.Scanner
+
+
+fun main(args: Array<String>) {
+   println("please work")
+   val scanner = Scanner(System.`in`) //sets up the scanner that you can use to get the next line
+   val n = scanner.nextInt()
+   val bWArray = Array<CharArray>(n) { CharArray(n){' '} }
+   for (i in 0 until n) {
+      val aString = scanner.next()
+      for (j in 0 until n){
+        bWArray[i][j] = aString[j]
+      }
+   }
+
+
+   fun findNext(): Pair<Int, Int> { //finds the next spot where there is a '-'
+       for (i in 0 until n) {
+           for (j in 0 until n) {
+               if (bWArray[i][j] == '-') {
+                   return (i to j)
+               }
+           }
+       }
+       return (-1 to -1)
+   }
+
+
+   fun printSolvedGrid(){
+       for (i in 0 until n){
+           var currentLine = ""
+           for (j in 0 until n){
+               currentLine += bWArray[i][j]
+           }
+           println(currentLine)
+       }
+       println()
+   }
+
+   fun isValid(x: Pair<Int,Int>): Boolean {
+       //checks if each row a valid amount of Blue and White
+       val cutoffNumber = n / 2
+
+       if (bWArray[x.first].count{it == 'W'} > cutoffNumber || bWArray[x.first].count{it == 'B'} > cutoffNumber) {
+           return false
+       }
+       //checks if each column has a valid amount of Blue & White
+       var whiteCount = 0
+       var blueCount = 0
+       for (i in 0 until n) {
+           if (bWArray[i][x.second] == 'W') {
+               whiteCount++
+           }
+           else if (bWArray[i][x.second] == 'B') {
+               blueCount++
+           }
+       }
+       if (whiteCount > cutoffNumber || blueCount > cutoffNumber) {
+           return false
+       }
+
+
+       //checks if any of the values in the row create 3-in-1-row ***
+       for (j in 0 until n - 2) {
+           if (bWArray[x.first][j] == 'W' && bWArray[x.first][j + 1] == 'W' && 'W' == bWArray[x.first][j + 2]) {
+               return false
+           }
+       }
+
+        for (j in 0 until n - 2) {
+           if (bWArray[x.first][j] == 'B' && bWArray[x.first][j + 1] == 'B' && 'B' == bWArray[x.first][j + 2]) {
+               return false
+           }
+       }
+       //checks if any of the values in the column create 3-in-a-row
+       for (i in 0 until n - 2) {
+           if (bWArray[i][x.second] == 'W' &&bWArray[i + 1][x.second] == 'W' && 'W' == bWArray[i + 2][x.second]) {
+               return false
+           }
+       }
+
+       for (i in 0 until n - 2) {
+           if (bWArray[i][x.second] == 'B' &&bWArray[i + 1][x.second] == 'B' && 'B' == bWArray[i + 2][x.second]) {
+               return false
+           }
+       }
+       return true //if nothing returns false then everything works and the function returns true
+   }
+
+
+   fun solveGrid(x: Pair<Int,Int>): Boolean {
+       //checks if it is the last cell
+       if (x.first == -1) {
+           return true
+       }
+       bWArray[x.first][x.second] = 'W' // if B didn't work then it sets the value to W
+       
+       val whiteWork = isValid(x) //checks if the partial solution works if you set W
+       if (whiteWork) { //if W works, it checks the next value in solveGrid
+           if (solveGrid(findNext())) {
+               return true
+           }
+       }
+       bWArray[x.first][x.second] = 'B' //sets the value to B
+       val blueWork = isValid(x) //checks if the partial solution works if you set B
+       if (blueWork) { //if it works, it checks the next value in solveGrid
+         if (solveGrid(findNext())) {
+             return true
+         }
+       }
+  
+       bWArray[x.first][x.second] = '-' //if neither W or B work reset it at '-' for future use
+       return false //if both W & B don't work then it returns false because no solution exists
+   }
+
+
+   if (!solveGrid(findNext())) {
+       println("There is no solution.")
+   }
+   else {
+       printSolvedGrid()
+   }
+}

@@ -1,0 +1,28 @@
+This folder contains four files and one directory:
+
+- DpEditDistance.kt
+- MemEditDistance.kt
+- EditDistanceTest.kt
+- readme.txt
+- data
+
+You are to fill in the missing code in `DpEditDistance.kt`
+and `MemEditDistance.kt`.  The file `EditDistanceTest.kt`
+is the test harness for running and comparing the functions
+`dpEditDistance()` and `memEditDistance` on the same pair
+of strings.  The `data` directory contains input files
+of sample DNA sequences.
+
+To compile all Kotlin programs, type
+
+    kotlinc *.kt
+
+To run `DpEditDistanceKt` on `example10.txt`, type
+
+    kotlin DpEditDistanceKt < data/example10.txt
+
+To run `MemEditDistanceKt` on `example10.txt`, type
+
+    kotlin MemEditDistanceKt < data/example10.txt
+
+etc.

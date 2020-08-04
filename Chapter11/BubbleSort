@@ -1,0 +1,93 @@
+allocate-registers InputData 
+allocate-registers Count, Num1, Num2, test
+allocate-registers n 
+allocate-registers one 
+allocate-registers zero
+allocate-registers NonpositiveDetect
+allocate-registers BubbleSort, LoopSaveData, EndProgram, LoopBubbleSort
+allocate-registers Display, Swap, CheckEndArray, LoopDisplayData 
+allocate-registers Array
+
+
+li one 1
+li Array 0
+li n 0
+
+li BubbleSort, BubbleSortL
+li LoopSaveData LoopSaveDataL
+li EndProgram EndProgramL
+li LoopBubbleSort LoopBubbleSortL
+li Display DisplayL
+li Swap SwapL
+li CheckEndArray CheckEndArrayL
+li LoopDisplayData LoopDisplayDataL
+
+LoopSaveDataL:
+
+	;; This loop reads in the values from the user. If the value is 0, the loop ends and jump to the next step ;;
+
+	;; After the numbers are read in, the program will store all the values into the data memory as an array;;
+
+	read InputData
+	sgt NonpositiveDetect InputData zero
+	jeqz NonpositiveDetect BubbleSort
+	st InputData Array
+	add Array Array one
+	add n n one
+	j LoopSaveData
+
+BubbleSortL:
+
+	;; These codes test whether the number of numbers we read in is greater than 1. If the number of values is less than 1, jump to end program ;;
+
+	jeqz n EndProgram
+	sgt test n one
+	jeqz test Display
+
+
+;; load the position of array back to zero ;;
+
+li Count 1
+li Array 0
+
+LoopBubbleSortL:
+
+	;; Take two numbers next to each other from the array and compare them ;;
+
+	ld Num1 Array
+	add Array Array one
+	ld Num2 Array
+	add Count Count one
+	sle test Num1 Num2
+	jeqz test Swap
+
+	;; if the second number is smaller than the first number, jump to swap;;
+
+CheckEndArrayL:
+	slt test Count n
+	jeqz test Display
+	j LoopBubbleSort
+
+SwapL:
+	sub Array Array one
+	st Num2 Array
+	add Array Array one
+	st Num1 Array
+	j CheckEndArray
+
+DisplayL:
+	li Count 1
+	li Array 0
+
+LoopDisplayDataL:
+	ld test Array
+	add Array Array one
+	add Count Count one
+	write test
+	slt test n Count
+	jeqz test EndProgram
+	j LoopDisplayData
+
+EndProgramL:
+	halt
+

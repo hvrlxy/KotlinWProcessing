@@ -1,0 +1,45 @@
+; 11.7 exercise Fermat number
+
+allocate-registers k zero one two num result 
+allocate-registers power end if special comparison
+
+read k
+
+li zero 0
+li one 1
+li two 2
+li num 1
+li power powerL
+li end afterFirst
+li if ifL
+li special specialL
+
+ifL:
+sgt comparison k zero
+jeqz comparison special
+
+powerL:
+	sgt comparison k zero
+	jeqz comparison end 
+	mul num num two
+	sub k k one
+	j power
+
+afterFirst:
+	write num
+	add result num zero
+	li num 1
+	li k 0
+	add k result zero
+	li end afterSecond
+	j power
+
+afterSecond:
+	add num num one
+	write num
+	halt
+
+specialL:
+	add two two one
+	write two
+	halt

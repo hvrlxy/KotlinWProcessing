@@ -1,0 +1,41 @@
+allocate-registers a b c 
+allocate-registers one zero
+allocate-registers end loop loop1 display 
+allocate-registers remainder comparison count num
+
+read a
+read b
+read c
+
+li one 1
+li zero 0
+
+li end endL
+li loop loopL
+li loop1 loop1L
+li display displayL
+
+li count 0
+li num 0
+
+loopL:
+	add num num one
+	slt comparison count c
+	jeqz comparison end
+	j loop1
+
+loop1L:
+	rem remainder num a
+	jeqz remainder display
+
+	rem remainder num b
+	jeqz remainder display
+	j loop
+
+displayL:
+	write num 
+	add count count one
+	j loop
+
+endL:
+	halt

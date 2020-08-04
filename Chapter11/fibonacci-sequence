@@ -1,0 +1,57 @@
+;; fibonacci sequence
+
+allocate-registers n
+allocate-registers zero one two
+allocate-registers sp comparison 
+allocate-registers ifOne ifTwo end loop
+allocate-registers val
+
+read n
+
+li one 1
+li two 2
+li zero 0
+
+li sp 0
+
+li ifOne ifOneL
+li ifTwo ifTwoL
+li end endL
+li loop loopL
+
+st n sp
+add sp sp one
+
+loopL:
+	jeqz sp end
+
+	sub sp sp one
+	ld n sp
+
+	sne comparison n one
+	jeqz comparison ifOne
+	sne comparison n two
+	jeqz comparison ifTwo
+
+	sub n n one
+	st n sp
+	add sp sp one
+	sub n n one
+	st n sp
+	add sp sp one
+
+	j loop
+
+ifOneL:
+	add val val zero
+	j loop
+
+ifTwoL:
+	add val val one
+	j loop
+
+endL:
+	write val 
+	halt
+
+

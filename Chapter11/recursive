@@ -1,0 +1,43 @@
+;; recursive power of 2
+
+allocate-registers one two n sp
+allocate-registers baseCase end store load cont val
+
+li one 1
+li two 2
+read n 
+li sp 0
+
+li baseCase baseCaseL
+li end endL
+li store storeL
+li load loadL
+li cont endL
+
+storeL:
+	jeqz n baseCase	; if n is 0
+	st two sp
+	add sp sp one
+	st cont sp
+	add sp sp one
+	sub n n one
+	li cont loadL
+	j store
+
+loadL:
+	sub sp sp one
+	ld cont sp
+	sub sp sp one
+	ld two sp
+
+	mul val val two
+	j cont
+
+baseCaseL:
+	li val 1
+	j cont
+
+endL:
+	write val
+	halt
+

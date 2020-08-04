@@ -1,0 +1,40 @@
+; 11.3 exercise
+
+allocate-registers a b c one two zero four b2 ac pi ifzero ifone iftwo comparison
+
+read a 
+read b
+read c
+
+li zero 0
+li one 1
+li two 2
+li four 4
+
+mul b2 b b
+mul ac a c
+mul ac four ac
+
+sub pi b2 ac
+
+li ifzero zeroL
+li ifone oneL
+li iftwo twoL
+
+sge comparison pi zero
+jeqz comparison ifzero
+seq comparison pi zero
+jeqz comparison iftwo
+j ifone
+
+zeroL:
+	write zero
+	halt
+
+oneL:
+	write one
+	halt
+
+twoL:
+	write two
+	halt

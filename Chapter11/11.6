@@ -1,0 +1,30 @@
+; 11.6 exercise
+
+allocate-registers num pow two zero one loop end comparison if
+
+li num 2 
+read pow
+
+li two 2
+li zero 0
+li one 1
+li loop loopL
+li end endL
+li if ifL
+
+ifL: 
+	seq comparison pow zero 
+	jeqz comparison loop
+	write one
+	halt
+
+loopL:
+	sgt comparison pow one ; bị thừa một vòng lặp ***
+	jeqz comparison end
+	mul num num two
+	sub pow pow one
+	j loop
+
+endL:
+	write num
+	halt

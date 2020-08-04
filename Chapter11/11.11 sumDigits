@@ -1,0 +1,46 @@
+; exercise 11.11: compute the sum of the digits in a number
+
+allocate-registers one ten sp digit cont end store load val n baseCase comparison
+
+read n 
+
+li one 1
+li ten 10
+li sp 0
+
+li baseCase baseCaseL
+li load loadL
+li store storeL
+li end endL
+li cont endL
+
+storeL:
+	sgt comparison n ten
+	jeqz comparison baseCase 
+
+	rem digit n ten
+	div n n ten
+	st digit sp
+	add sp sp one
+	st cont sp
+	add sp sp one
+	li cont loadL
+	j store
+
+loadL:
+	sub sp sp one
+	ld cont sp
+	sub sp sp one
+	ld digit sp
+
+	add val val digit
+	j cont
+
+baseCaseL:
+	add val val n
+	j cont
+
+endL:
+	write val
+	halt
+

@@ -1,0 +1,42 @@
+allocate-registers a three one zero store load baseCase cont val
+
+read a
+
+li three 3
+li one 1
+li zero 0
+
+li store storeL
+li load loadL
+li baseCase baseCaseL
+li cont endL
+
+li sp 0
+
+storeL:
+	jeqz a baseCase
+
+	st three sp
+	add sp sp one
+	st cont sp
+	add sp sp one
+	sub a a one
+	li cont loadL
+	j store
+
+loadL:
+	sub sp sp one
+	ld cont sp
+	sub sp sp one
+	ld three sp
+
+	mul val val three
+	j cont
+
+baseCaseL:
+	add val val one
+	j cont
+
+endL:
+	write val
+	halt

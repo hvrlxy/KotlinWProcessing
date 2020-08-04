@@ -1,0 +1,7 @@
+declare the return type of an argument:
+() -> String
+(String) -> Int
+(int, string) -> String
+
+Lambda expression
+{x: int, y: double -> x.toDouble()+y}

@@ -1,0 +1,53 @@
+buildscript {
+  ext.kotlin_version = '1.3.50'
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+repositories {
+/*
+  jcenter()
+  google()
+*/
+  // core, minim, stdlib
+  mavenCentral()
+/*
+  // jsyn
+  maven {
+    url 'https://clojars.org/repo/'
+  }
+  // processing-sound
+  maven {
+    url 'https://jitpack.io'
+  }
+*/
+}
+
+dependencies {
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  compile 'org.processing:core:3.3.6'
+  compile 'org.jogamp.jogl:jogl-all-main:2.3.2'
+  compile 'net.compartmental.code:minim:2.2.2'
+
+/*
+  compile 'com.jsyn:jsyn:20170815'
+  compile 'com.github.processing:processing-sound:2.2.0'
+*/
+
+// compile group: 'com.googlecode.princeton-java-introduction', name: 'stdlib', version: '1.0.1'
+
+//compile fileTree(dir: 'libs', include: ['*.jar'])
+
+//testCompile 'junit:junit:4.12'
+//testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+mainClassName = 'NbodyKt'

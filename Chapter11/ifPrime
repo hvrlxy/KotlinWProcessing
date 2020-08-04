@@ -1,0 +1,33 @@
+allocate-registers n one zero loop ifPrime ifNotPrime a comparison remainder something first-loop stop end val
+
+read n 
+
+li one 1
+li zero 0
+
+li loop loopL
+li ifPrime ifPrimeL
+li ifNotPrime ifNotPrimeL
+li end endL
+
+add a a n
+
+loopL:
+	sub a a one
+	sgt comparison a one
+	jeqz comparison ifPrime
+	rem remainder n a
+	sne comparison remainder zero
+	jeqz comparison ifNotPrime
+	j loop
+
+ifPrimeL:
+	li val 1
+	j end	
+
+ifNotPrimeL:
+	li val 0
+	j end
+
+endL:
+	write val

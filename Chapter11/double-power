@@ -1,0 +1,45 @@
+; find the function x^(x^x)
+
+allocate-registers x num ; input and output
+allocate-registers one zero ; constants
+allocate-registers e comparison
+allocate-registers loop end if 
+
+
+read x
+
+li one 1
+li zero 0
+
+li num 1
+
+add e e x
+
+li loop loopL
+li if ifL
+li end afterFirst
+
+ifL:
+	seq comparison x zero
+	jeqz comparison loop
+	li num 0
+	j end
+
+loopL:
+	sgt comparison e zero
+	jeqz comparison end
+	mul num num x
+	sub e e one
+	j loop
+
+afterFirst:
+	write num
+	sub e e e
+	add e e num
+	li num 1
+	li end afterSecond
+	j if
+
+afterSecond:
+	write num
+	halt
